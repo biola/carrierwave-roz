@@ -25,14 +25,12 @@ module CarrierWave
         end
 
         def store(file)
-          # RestClient wants a File not a CarrierWave::SanitizedFile because it calls
-          # File#read([limit]) and SanitizedFile doesn't support a limit argument
-          response = client.upload(file.to_file, path)
+          response = client.upload(file, path)
 
-          unless (200..208).include? response.code
+          unless (200..208).include? response.code.to_i
             # json = JSON.parse(response.to_str)
             # TODO: try to parse and raise JSON error message
-            raise response.to_str
+            raise response.to_s
           end
         end
 
@@ -51,10 +49,10 @@ module CarrierWave
         def delete
           response = client.delete(path)
 
-          unless (200..208).include? response.code
+          unless (200..208).include? response.code.to_i
             # json = JSON.parse(response.to_str)
             # TODO: try to parse and raise JSON error message
-            raise response.to_str
+            raise response.to_s
           end
         end
 
@@ -73,7 +71,7 @@ module CarrierWave
         protected
 
         def client
-          CarrierwaveRoz::Client.new(uploader.api_base_url)
+          CarrierwaveRoz::Client.new(uploader.api_base_url, uploader.access_id, uploader.secret_key)
         end
 
         def file
