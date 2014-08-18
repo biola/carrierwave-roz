@@ -35,7 +35,7 @@ module CarrierWave
         end
 
         def url(*args)
-          URI.join(uploader.files_base_url, path).to_s
+          URI.join(uploader.files_base_url, "#{uploader.access_id}/", path).to_s
         end
 
         def filename
