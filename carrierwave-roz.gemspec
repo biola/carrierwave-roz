@@ -16,4 +16,5 @@ spec = Gem::Specification.new do |s|
   s.license = 'MIT'
   s.add_dependency('carrierwave', '~> 0.10')
   s.add_dependency('multipart-post', '~> 2.0')
+  s.add_dependency('api-auth', '~> 1.2')
 end
