@@ -27,13 +27,13 @@ module CarrierwaveRoz
       request.body_stream.rewind
       request['Content-MD5'] = Digest::MD5.base64digest(body)
 
-      send request, uri
+      send_request request, uri
     end
 
     def delete(path)
       uri = url_for(:delete, path: path)
 
-      send Net::HTTP::Delete.new(uri.request_uri), uri
+      send_request Net::HTTP::Delete.new(uri.request_uri), uri
     end
 
     private
@@ -44,7 +44,7 @@ module CarrierwaveRoz
       end
     end
 
-    def send(request, uri)
+    def send_request(request, uri)
       ApiAuth.sign! request, access_id, secret_key
 
       Net::HTTP.start(uri.host, uri.port) do |http|
