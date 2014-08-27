@@ -22,7 +22,7 @@ module CarrierwaveRoz
 
       # Set Content-MD5 header.
       # This works around an incompatibility between api_auth and multipart-post.
-      # It should no longer be required if https://github.com/mgomes/api_auth/pull/47 is merged.
+      # It should no longer be required with api-auth > 1.2.3
       body = request.body_stream.read
       request.body_stream.rewind
       request['Content-MD5'] = Digest::MD5.base64digest(body)
