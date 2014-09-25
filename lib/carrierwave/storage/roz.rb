@@ -5,7 +5,7 @@ module CarrierWave
   module Storage
     class Roz < Abstract
       def identifier
-        ::File.join(uploader.access_id.to_s, uploader.store_dir, uploader.filename)
+        ::File.join(*[uploader.access_id, uploader.store_dir, uploader.filename].map(&:to_s))
       end
 
       def store!(file)
