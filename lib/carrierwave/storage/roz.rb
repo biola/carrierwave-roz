@@ -4,14 +4,18 @@ require 'ostruct'
 module CarrierWave
   module Storage
     class Roz < Abstract
+      def identifier
+        ::File.join(uploader.access_id.to_s, uploader.store_dir, uploader.filename)
+      end
+
       def store!(file)
-        f = CarrierWave::Storage::Roz::File.new(uploader, uploader.store_path)
+        f = CarrierWave::Storage::Roz::File.new(uploader, identifier)
         f.store(file)
         f
       end
 
       def retrieve!(identifier)
-        CarrierWave::Storage::Roz::File.new(uploader, uploader.store_path(identifier))
+        CarrierWave::Storage::Roz::File.new(uploader, identifier)
       end
 
       class File
@@ -35,7 +39,12 @@ module CarrierWave
         end
 
         def url(*args)
-          URI.join(uploader.files_base_url, "#{uploader.access_id}/", path).to_s
+          if path == ::File.basename(path)
+            # Backwards compatibility for when we were storing only the filename
+            URI.join(uploader.files_base_url, "#{uploader.access_id.to_s}/", "#{uploader.store_dir}/", path).to_s
+          else
+            URI.join(uploader.files_base_url, path).to_s
+          end
         end
 
         def filename

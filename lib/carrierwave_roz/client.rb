@@ -3,7 +3,7 @@ require 'api_auth'
 
 module CarrierwaveRoz
   class Client
-    VERSION = 'v1'
+    VERSION = 'v2'
 
     attr_reader :base_url
     attr_reader :access_id
