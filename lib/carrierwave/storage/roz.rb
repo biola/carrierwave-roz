@@ -5,6 +5,8 @@ module CarrierWave
   module Storage
     class Roz < Abstract
       def identifier
+        return nil unless uploader.filename
+
         full_filename = [uploader.version_name, uploader.filename].compact.join('_')
         ::File.join(*[uploader.access_id, uploader.store_dir, full_filename].map(&:to_s))
       end
