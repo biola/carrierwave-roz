@@ -47,8 +47,9 @@ module CarrierwaveRoz
     def send_request(request, uri)
       ApiAuth.sign! request, access_id, secret_key
 
-      Net::HTTP.start(uri.host, uri.port) do |http|
-        http.use_ssl = true if uri.scheme == 'https'
+      ssl = uri.scheme == 'https'
+
+      Net::HTTP.start(uri.host, uri.port, use_ssl: ssl) do |http|
         http.request(request)
       end
     end
