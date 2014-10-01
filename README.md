@@ -1,6 +1,8 @@
 CarrierWave Roz
 ===============
 
+carrierwave-roz is a [carrierwave](https://github.com/carrierwaveuploader/carrierwave) storage plugin that for the [roz](https://github.com/biola/roz) file storage API.
+
 Installation
 ------------
 
