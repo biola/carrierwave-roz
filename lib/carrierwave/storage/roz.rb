@@ -47,7 +47,7 @@ module CarrierWave
             URI.join(uploader.files_base_url, "#{uploader.access_id.to_s}/", "#{uploader.store_dir}/", path).to_s
           else
             dirname = ::File.dirname(path)
-            basename = [uploader.version_name, ::File.basename(path)].compact.join('_')
+            basename = ::File.basename(path)
             URI.join(uploader.files_base_url, "#{dirname}/", basename).to_s
           end
         end
