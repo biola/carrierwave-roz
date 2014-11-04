@@ -46,7 +46,9 @@ module CarrierWave
             # Backwards compatibility for when we were storing only the filename
             URI.join(uploader.files_base_url, "#{uploader.access_id.to_s}/", "#{uploader.store_dir}/", path).to_s
           else
-            URI.join(uploader.files_base_url, path).to_s
+            dirname = ::File.dirname(path)
+            basename = [uploader.version_name, ::File.basename(path)].compact.join('_')
+            URI.join(uploader.files_base_url, "#{dirname}/", basename).to_s
           end
         end
 
