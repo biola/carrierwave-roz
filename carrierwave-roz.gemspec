@@ -15,7 +15,7 @@ spec = Gem::Specification.new do |s|
   s.homepage = 'https://github.com/biola/carrierwave-roz'
   s.license = 'MIT'
   s.add_dependency('api-auth', '~> 1.2')
-  s.add_dependency('carrierwave', '~> 0.9.0')
+  s.add_dependency('carrierwave', '~> 0.10.0')
   s.add_dependency('multipart-post', '~> 2.0')
   s.add_development_dependency('combustion', '~> 0.5')
   s.add_development_dependency('capybara', '~> 2.4')
