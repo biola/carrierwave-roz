@@ -1,0 +1,18 @@
+<h1><%= @photo.name %></h1>
+
+<h2>Small</h2>
+<%= image_tag @photo.file_url(:small), id: 'small' %>
+
+<h2>Medium</h2>
+<%= image_tag @photo.file_url(:medium), id: 'medium' %>
+
+<h2>Large</h2>
+<%= image_tag @photo.file_url(:large), id: 'large' %>
+
+<h2>Original</h2>
+<%= image_tag @photo.file_url, id: 'original' %>
+
+<%= link_to 'Edit', edit_photo_path(@photo) %>
+<%= form_for @photo, method: :delete do |f| %>
+<%= f.submit 'Delete Photo' %>
+<% end %>
