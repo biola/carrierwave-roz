@@ -7,8 +7,7 @@ module CarrierWave
       def identifier
         return nil unless uploader.filename
 
-        full_filename = [uploader.version_name, uploader.filename].compact.join('_')
-        ::File.join(*[uploader.access_id, uploader.store_dir, full_filename].map(&:to_s))
+        ::File.join(*[uploader.access_id, uploader.store_dir, uploader.filename].map(&:to_s))
       end
 
       def store!(file)
@@ -22,13 +21,13 @@ module CarrierWave
       end
 
       class File
-        attr_reader :path
+        attr_reader :identifier
         attr_reader :uploader
         attr_reader :file
 
-        def initialize(uploader, path)
+        def initialize(uploader, identifier)
           @uploader = uploader
-          @path = path
+          @identifier = identifier
         end
 
         def store(file)
@@ -46,14 +45,18 @@ module CarrierWave
             # Backwards compatibility for when we were storing only the filename
             URI.join(uploader.files_base_url, "#{uploader.access_id.to_s}/", "#{uploader.store_dir}/", path).to_s
           else
-            dirname = ::File.dirname(path)
-            basename = [uploader.version_name, ::File.basename(path)].compact.join('_')
-            URI.join(uploader.files_base_url, "#{dirname}/", basename).to_s
+            URI.join(uploader.files_base_url, path).to_s
           end
         end
 
         def filename
           ::File.basename(path)
+        end
+
+        def path
+          dirname = ::File.dirname(identifier)
+          basename = [uploader.version_name, ::File.basename(identifier)].compact.join('_')
+          ::File.join("#{dirname}/", basename).to_s
         end
 
         def read
